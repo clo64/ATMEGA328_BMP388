@@ -64,21 +64,21 @@ int8_t user_spi_read(uint8_t dev_id, uint8_t reg_addr, uint8_t *reg_data, uint16
 		_delay_us(10);	 // Send CS line low
 	}
 	
-	SPDR = reg_addr;				 // write reg address to BMP388
+	SPDR = reg_addr;		    // write reg address to BMP388
 	
-	while(!(SPSR & (1<<SPIF)));		 // wait for write complete
+	while(!(SPSR & (1<<SPIF)));         // wait for write complete
 	
-	for(int i=0;i<len;i++){		     // loop write dummy data to device while reading into reg_data
-		
-		SPDR = 0xff;				 // dummy write data
+	for(int i=0;i<len;i++)
+	{		    // loop write dummy data to device while reading into reg_data	
+		SPDR = 0xff;		    // dummy write data
 		while(!(SPSR & 1<<SPIF));
-		reg_data[i] = SPDR;        // read from SPI register into data array
-		
+		reg_data[i] = SPDR;         // read from SPI register into data array
 	}
 	
-	if(dev_id == 0){
+	if(dev_id == 0)
+	{
 		_delay_us(10);
-		PORTB |= (1<<PORTB2);		 // Send CS line high
+		PORTB |= (1<<PORTB2);	    // Send CS line high
 	}
 	
 	return(rslt);
@@ -89,7 +89,9 @@ int8_t user_spi_write(uint8_t dev_id, uint8_t reg_addr, uint8_t *reg_data, uint1
 	
 	int8_t rslt = 0; // 0 for success and 1 for failure
 	
-	if(dev_id == 0){ // Only one device to select, for now
+	//To add additional devices, alter logic to accomodate any number of device id's
+	if(dev_id == 0)	 // Only one device to select, for now
+	{ 
 		PORTB &=~ (1<<PORTB2);
 		_delay_us(10);
 	}
@@ -97,14 +99,14 @@ int8_t user_spi_write(uint8_t dev_id, uint8_t reg_addr, uint8_t *reg_data, uint1
 	SPDR = reg_addr;
 	while(!(SPSR & 1<<SPIF));
 	
-	for(int i=0;i<len;i++){
-		
+	for(int i=0;i<len;i++)
+	{		
 		SPDR = reg_data[i];
-		while(!(SPSR & 1<<SPIF));
-		
+		while(!(SPSR & 1<<SPIF));	
 	}
 	
-	if(dev_id == 0){ // Bring the line high again
+	if(dev_id == 0)  // Bring the CS line high, signals end of transmission
+	{ 
 		_delay_us(10);
 		PORTB |= (1<<PORTB2);
 	}
