@@ -68,7 +68,7 @@ int8_t user_spi_read(uint8_t dev_id, uint8_t reg_addr, uint8_t *reg_data, uint16
 	
 	while(!(SPSR & (1<<SPIF)));         // wait for write complete
 	
-	for(int i=0;i<len;i++)
+	for(int i=0; i<len; i++)
 	{		    // loop write dummy data to device while reading into reg_data	
 		SPDR = 0xff;		    // dummy write data
 		while(!(SPSR & 1<<SPIF));
@@ -99,7 +99,7 @@ int8_t user_spi_write(uint8_t dev_id, uint8_t reg_addr, uint8_t *reg_data, uint1
 	SPDR = reg_addr;
 	while(!(SPSR & 1<<SPIF));
 	
-	for(int i=0;i<len;i++)
+	for(int i=0; i<len; i++)
 	{		
 		SPDR = reg_data[i];
 		while(!(SPSR & 1<<SPIF));	
