@@ -7,6 +7,6 @@ The UART functions I provide are very sparce and utilitarian. The nature of the 
 
 Two useful functions that I couldn't find documentation for, user_spi_read and user_spi_write:
 
-# int8_t user_spi_read(uint8_t dev_id, uint8_t reg_addr, uint8_t *reg_data, uint16_t len);
+### int8_t user_spi_read(uint8_t dev_id, uint8_t reg_addr, uint8_t *reg_data, uint16_t len);
 
-# int8_t user_spi_write(uint8_t dev_id, uint8_t reg_addr, uint8_t *reg_data, uint16_t len);
+### int8_t user_spi_write(uint8_t dev_id, uint8_t reg_addr, uint8_t *reg_data, uint16_t len);
